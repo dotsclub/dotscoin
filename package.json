@@ -1,0 +1,20 @@
+{
+  "name": "dotscoin",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/romitkarmakar/dotscoin.git",
+  "author": "Romit Karmakar <romitkarmakar@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^0.19.2",
+    "cors": "^2.8.5",
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "@types/node": "^14.0.13",
+    "typescript": "^3.9.5"
+  },
+  "scripts": {
+    "start": "tsc && node build/index.js"
+  }
+}

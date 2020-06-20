@@ -1,0 +1,15 @@
+{
+    "compilerOptions": {
+        "outDir": "build",
+        "sourceMap": true,
+        "alwaysStrict": true,
+        "target": "ES6",
+        "lib": ["ES2015"],
+        "declaration": true,
+        "declarationDir": "build",
+        "esModuleInterop": true,
+        "module": "CommonJS"
+    },
+    "include": ["src/**/*.ts"],
+    "exclude": ["node_modules"]
+}
