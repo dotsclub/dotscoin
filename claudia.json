@@ -1,0 +1,10 @@
+{
+  "lambda": {
+    "role": "dotscoin-executor",
+    "name": "dotscoin",
+    "region": "ap-south-1"
+  },
+  "api": {
+    "id": "p1vcsf7m7c"
+  }
+}
