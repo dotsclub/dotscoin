@@ -38,3 +38,5 @@ pm2 start build/index.js
 ### ```GET /priceinxrp```
 
 ### ```GET /priceinwaves```
+
+### ```GET /prices```

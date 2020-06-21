@@ -174,11 +174,63 @@ app.get("/priceinxrp", async function (req, res) {
 });
 
 app.get("/priceinwaves", async function (req, res) {
+  let dotscoin_price = await dotscoinInfo();
+  let waves_price_res = await axios.get("https://marketdata.wavesplatform.com/api/ticker/WAVES/BTC")
+  let eth_price = +dotscoin_price.close / +waves_price_res.data["24h_close"]
+  res.status(200).send(`${eth_price.toFixed(8)}`);
+});
+
+app.get("/prices", async function (req, res) {
+  try {
     let dotscoin_price = await dotscoinInfo();
+    let blockchain_res = await axios.get("https://blockchain.info/ticker");
+    let blockchain_json = blockchain_res.data;
+    let usd_price = +dotscoin_price.close * +blockchain_json.USD.last;
+  
     let waves_price_res = await axios.get("https://marketdata.wavesplatform.com/api/ticker/WAVES/BTC")
-    let eth_price = +dotscoin_price.close / +waves_price_res.data["24h_close"]
-    res.status(200).send(`${eth_price.toFixed(8)}`);
-  });
+    let waves_price = +dotscoin_price.close / +waves_price_res.data["24h_close"]
+  
+    let usd_to_xrp_res = await axios.get(
+      "https://api.pro.coinbase.com/products/XRP-USD/stats"
+    );
+    let xrp_price = usd_price / +usd_to_xrp_res.data.last;
+  
+    let usd_to_bch_res = await axios.get(
+      "https://api.pro.coinbase.com/products/BCH-USD/stats"
+    );
+    let bch_price = usd_price / +usd_to_bch_res.data.last;
+  
+    let usd_to_ltc_res = await axios.get(
+      "https://api.pro.coinbase.com/products/LTC-USD/stats"
+    );
+    let ltc_price = usd_price / +usd_to_ltc_res.data.last;
+  
+    let usd_to_eth_res = await axios.get(
+      "https://api.pro.coinbase.com/products/ETH-USD/stats"
+    );
+    let eth_price = usd_price / +usd_to_eth_res.data.last;
+  
+    let usd_to_inr_res = await axios.get(
+      "https://api.exchangeratesapi.io/latest?symbols=INR&base=USD"
+    );
+    let inr_price = +usd_to_inr_res.data.rates.INR * usd_price;
+  
+    res.send({
+      "USD": usd_price,
+      "INR": inr_price,
+      "ETH": eth_price,
+      "LTC": ltc_price,
+      "BCH": bch_price,
+      "XRP": xrp_price,
+      "WAVES": waves_price,
+      "BTC": +dotscoin_price.close
+    })
+  } catch(e) {
+    console.log(e)
+    res.send({})
+  }
+ 
+});
 
 //app.listen(PORT, () => console.log(`Server started at post ${PORT}`));
 
