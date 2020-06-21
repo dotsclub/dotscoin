@@ -180,6 +180,6 @@ app.get("/priceinwaves", async function (req, res) {
     res.status(200).send(`${eth_price.toFixed(8)}`);
   });
 
-//app.listen(PORT, () => console.log(`Server started at post ${PORT}`));
+app.listen(PORT, () => console.log(`Server started at post ${PORT}`));
 
 //module.exports = app;
